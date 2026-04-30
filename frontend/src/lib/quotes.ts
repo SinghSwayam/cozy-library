@@ -1,0 +1,22 @@
+export const readingQuotes = [
+  "A book is a doorway where your body stays still, but your mind travels light-years away.",
+  "Science fiction doesn’t predict the future—it trains you to imagine it.",
+  "Fantasy reminds us that dragons may not be real, but courage always is.",
+  "Mystery novels teach you that every silence hides a story waiting to be uncovered.",
+  "Romance books prove that emotions can be just as powerful as any epic battle.",
+  "Reading is the quietest way to live a thousand different lives.",
+  "In a world of noise, books whisper truths that only patience can hear.",
+  "Every page you turn is a step further away from the ordinary.",
+  "Sci-fi shows you the universe; books show you yourself.",
+  "A good fantasy novel doesn’t help you escape reality—it helps you survive it.",
+  "Books are time machines disguised as paper and ink.",
+  "Thrillers remind you that even a heartbeat can feel like a countdown.",
+  "Reading builds worlds inside you that no one can take away.",
+  "Between two covers lies an entire universe waiting for permission to exist.",
+  "Historical fiction lets you walk through the past without leaving the present.",
+  "A reader never feels alone—the characters linger long after the last page.",
+  "Books don’t change the world directly; they change the people who will.",
+  "Every genre is a different lens, but all books sharpen your vision.",
+  "To read is to collect fragments of countless souls and make them part of your own.",
+  "The best stories don’t end—they echo in your thoughts long after you close the book."
+];

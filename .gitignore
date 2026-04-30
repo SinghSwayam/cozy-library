@@ -1,0 +1,5 @@
+.agent
+.planning
+node_modules
+*.code-workspace
+.env
