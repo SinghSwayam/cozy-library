@@ -1,5 +1,8 @@
-# Cozy Library
+# <h1 align="center">Cozy Library</h1>
 
+<div align="center"><img alt="StudyNotion" src="https://res.cloudinary.com/dnpfg6mua/image/upload/v1777528145/Screenshot_2026-04-30_111502_emkgpq.png"/></div>
+
+</br>
 A full-stack recommendation platform with three services:
 
 - `frontend/`: Next.js web app
