@@ -1,4 +1,4 @@
-# AI Book Recommender System
+# Cozy Library
 
 A full-stack recommendation platform with three services:
 
@@ -67,7 +67,7 @@ uvicorn main:app --reload
 ```bash
 cd backend
 npm install
-npm runstart
+npm run start
 ```
 
 ### Frontend

@@ -3,13 +3,13 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Global variables to hold data and similarity matrix in memory
+# Global variables to hold data and vectorized book content in memory
 _books_df = None
-_cosine_sim = None
+_tfidf_matrix = None
 _indices = None
 
 def load_data_and_train():
-    global _books_df, _cosine_sim, _indices
+    global _books_df, _tfidf_matrix, _indices
     
     data_path = os.path.join(os.path.dirname(__file__), 'data', 'books.csv')
     if not os.path.exists(data_path):
@@ -17,6 +17,7 @@ def load_data_and_train():
         
     print("Loading dataset...")
     df = pd.read_csv(data_path)
+    df = df.head(6500)
     
     # Handle missing values in relevant columns
     df['authors'] = df['authors'].fillna('')
@@ -33,19 +34,16 @@ def load_data_and_train():
     tfidf = TfidfVectorizer(stop_words='english')
     tfidf_matrix = tfidf.fit_transform(df['content'])
     
-    print("Computing cosine similarity matrix...")
-    # Compute the cosine similarity matrix
-    _cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
-    
     _books_df = df
+    _tfidf_matrix = tfidf_matrix
     # Map book_id to index in the DataFrame
     _indices = pd.Series(df.index, index=df['book_id']).drop_duplicates()
     print("Recommendation engine initialized.")
 
 def get_recommendations(book_id: int, top_n: int = 5):
-    global _books_df, _cosine_sim, _indices
+    global _books_df, _tfidf_matrix, _indices
     
-    if _books_df is None or _cosine_sim is None:
+    if _books_df is None or _tfidf_matrix is None:
         load_data_and_train()
         
     if book_id not in _indices:
@@ -53,19 +51,14 @@ def get_recommendations(book_id: int, top_n: int = 5):
         
     # Get the index of the book that matches the book_id
     idx = _indices[book_id]
+
+    # Compute similarity on demand against the full sparse matrix
+    target_vector = _tfidf_matrix[idx]
+    sim_scores = cosine_similarity(target_vector, _tfidf_matrix).flatten()
     
-    # Get the pairwise similarity scores of all books with that book
-    sim_scores = list(enumerate(_cosine_sim[idx]))
-    
-    # Sort the books based on the similarity scores (descending)
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    
-    # Get the scores of the top_n most similar books (ignoring the book itself)
-    # We take top_n + 1 and slice [1:] to exclude the target book itself which is always the most similar (score 1)
-    sim_scores = sim_scores[1:top_n+1]
-    
-    # Get the book indices
-    book_indices = [i[0] for i in sim_scores]
+    # Sort the books based on the similarity scores (descending) and exclude the target book itself
+    book_indices = sim_scores.argsort()[::-1]
+    book_indices = [i for i in book_indices if i != idx][:top_n]
     
     # Return the top top_n most similar books
     recommendations = _books_df.iloc[book_indices][['book_id', 'title', 'authors', 'image_url', 'average_rating']]
