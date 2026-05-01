@@ -37,6 +37,11 @@ app.get('/', (req, res) => {
   res.send('Book Recommendation Backend is running.');
 });
 
+// Keep-alive ping route
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ message: 'Backend is healthy and running.' });
+});
+
 // 1. GET /api/books - Fetch a list of books with optional title search, limited to 50
 app.get('/api/books', async (req, res) => {
   try {
