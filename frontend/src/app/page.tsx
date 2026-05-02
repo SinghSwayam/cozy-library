@@ -170,7 +170,7 @@ export default function Home() {
       </section>
 
       {/* Cover Image Section */}
-      <div className="w-[95%] h-[600px] mb-5 mt-[-10%] mx-auto flex justify-center relative rounded-lg overflow-hidden shadow-lg">
+      <div className="w-[95%] h-[600px] mb-5 mx-auto flex justify-center relative rounded-lg overflow-hidden shadow-lg">
         <img src="/cover.png" alt="Cover" className="w-full object-cover" />
         <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-linear-to-t from-[#d4d4d4] via-[#d4d4d4]/20 to-transparent pointer-events-none" />
       </div>
