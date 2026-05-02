@@ -3,19 +3,19 @@
 @theme inline {
   --color-background: #f5fbf5;
   --color-on-background: #171d19;
-  
+
   --color-surface: #f5fbf5;
   --color-surface-dim: #d5dcd6;
   --color-on-surface: #171d19;
   --color-outline: #6d7a72;
   --color-outline-variant: #bccac0;
-  
+
   --color-primary: #006948;
   --color-on-primary: #ffffff;
-  
+
   --color-secondary: #645d58;
   --color-on-secondary: #ffffff;
-  
+
   --color-tertiary: #9b3e3b;
   --color-on-tertiary: #ffffff;
 
@@ -41,4 +41,30 @@ body {
   color: var(--color-on-background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-outline-variant) transparent;
+}
+
+/* Custom Scrollbar — Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: 9999px;
+  border: 2px solid var(--color-background);
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--color-primary);
 }

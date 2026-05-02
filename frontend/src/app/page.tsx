@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Library, Sparkles, BrainCircuit } from "lucide-react";
 import { readingQuotes } from "@/lib/quotes";
@@ -38,6 +38,7 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<Book[] | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const { user, logout } = useAuth();
+  const searchResultsRef = useRef<HTMLDivElement>(null);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
@@ -83,6 +84,9 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         setSearchResults(data);
+        setTimeout(() => {
+          searchResultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
       }
     } catch (err) {
       console.error("Search failed", err);
@@ -165,9 +169,15 @@ export default function Home() {
         )}
       </section>
 
+      {/* Cover Image Section */}
+      <div className="w-[95%] h-[600px] mb-5 mt-[-10%] mx-auto flex justify-center relative rounded-lg overflow-hidden shadow-lg">
+        <img src="/cover.png" alt="Cover" className="w-full object-cover" />
+        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-linear-to-t from-[#d4d4d4] via-[#d4d4d4]/20 to-transparent pointer-events-none" />
+      </div>
+
       {/* Dynamic Content Section: Search Results OR Infinite Carousel */}
       {searchResults ? (
-        <section className="pb-24 w-full max-w-7xl mx-auto px-6 sm:px-12">
+        <section ref={searchResultsRef} className="pb-24 w-full max-w-7xl mx-auto px-6 sm:px-12 scroll-mt-20">
           <h2 className="font-serif text-2xl font-semibold mb-6 text-on-surface flex items-center justify-between">
             <span>Search Results</span>
             <button 
